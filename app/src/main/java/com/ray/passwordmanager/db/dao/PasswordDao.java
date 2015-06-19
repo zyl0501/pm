@@ -26,7 +26,8 @@ public class PasswordDao extends AbstractDao<PasswordEntity, Long> {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property Username = new Property(1, String.class, "username", false, "USERNAME");
         public final static Property Password = new Property(2, String.class, "password", false, "PASSWORD");
-        public final static Property Note = new Property(3, String.class, "note", false, "NOTE");
+        public final static Property Category = new Property(3, String.class, "category", false, "CATEGORY");
+        public final static Property Note = new Property(4, String.class, "note", false, "NOTE");
     };
 
 
@@ -45,12 +46,15 @@ public class PasswordDao extends AbstractDao<PasswordEntity, Long> {
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'USERNAME' TEXT NOT NULL ," + // 1: username
                 "'PASSWORD' TEXT NOT NULL ," + // 2: password
-                "'NOTE' TEXT);"); // 3: note
+                "'CATEGORY' TEXT," + // 3: category
+                "'NOTE' TEXT);"); // 4: note
         // Add Indexes
         db.execSQL("CREATE INDEX " + constraint + "IDX_Password_USERNAME ON Password" +
                 " (USERNAME);");
         db.execSQL("CREATE INDEX " + constraint + "IDX_Password_PASSWORD ON Password" +
                 " (PASSWORD);");
+        db.execSQL("CREATE INDEX " + constraint + "IDX_Password_CATEGORY ON Password" +
+                " (CATEGORY);");
         db.execSQL("CREATE INDEX " + constraint + "IDX_Password_NOTE ON Password" +
                 " (NOTE);");
     }
@@ -73,9 +77,14 @@ public class PasswordDao extends AbstractDao<PasswordEntity, Long> {
         stmt.bindString(2, entity.getUsername());
         stmt.bindString(3, entity.getPassword());
  
+        String category = entity.getCategory();
+        if (category != null) {
+            stmt.bindString(4, category);
+        }
+ 
         String note = entity.getNote();
         if (note != null) {
-            stmt.bindString(4, note);
+            stmt.bindString(5, note);
         }
     }
 
@@ -92,7 +101,8 @@ public class PasswordDao extends AbstractDao<PasswordEntity, Long> {
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.getString(offset + 1), // username
             cursor.getString(offset + 2), // password
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3) // note
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // category
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // note
         );
         return entity;
     }
@@ -103,7 +113,8 @@ public class PasswordDao extends AbstractDao<PasswordEntity, Long> {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUsername(cursor.getString(offset + 1));
         entity.setPassword(cursor.getString(offset + 2));
-        entity.setNote(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCategory(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setNote(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     /** @inheritdoc */

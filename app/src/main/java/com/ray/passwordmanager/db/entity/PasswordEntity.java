@@ -9,11 +9,14 @@ package com.ray.passwordmanager.db.entity;
  */
 public class PasswordEntity {
 
-    private Long id;
+    public static final Long INVALID_ID = -1l;
+
+    private Long id = INVALID_ID;
     /** Not-null value. */
     private String username;
     /** Not-null value. */
     private String password;
+    private String category;
     private String note;
 
     // KEEP FIELDS - put your custom fields here
@@ -26,10 +29,11 @@ public class PasswordEntity {
         this.id = id;
     }
 
-    public PasswordEntity(Long id, String username, String password, String note) {
+    public PasswordEntity(Long id, String username, String password, String category, String note) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.category = category;
         this.note = note;
     }
 
@@ -59,6 +63,14 @@ public class PasswordEntity {
     /** Not-null value; ensure this value is available before it is saved to the database. */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getNote() {

@@ -28,6 +28,7 @@ public class MyDaoGenerator {
         password.addIdProperty().autoincrement();
         password.addStringProperty("username").notNull().index();
         password.addStringProperty("password").notNull().index();
+        password.addStringProperty("category").index();
         password.addStringProperty("note").index();
 
         password.setHasKeepSections(true);

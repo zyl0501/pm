@@ -7,12 +7,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ray.passwordmanager.R;
 import com.ray.passwordmanager.db.entity.PasswordEntity;
 
 public class PwdNormalAdapter extends BasePMAdapter<PasswordEntity> {
+
+    // declare the color generator and drawable builder
+    private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
+    private TextDrawable.IBuilder mDrawableBuilder;
+
     public PwdNormalAdapter(Context context) {
         super(context);
+        mDrawableBuilder = TextDrawable.builder().round();
     }
 
     @Override
@@ -30,11 +38,12 @@ public class PwdNormalAdapter extends BasePMAdapter<PasswordEntity> {
     protected void bindView(int position, View view, ViewGroup parent) {
         PasswordEntity entity = getItem(position);
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.icon.setImageResource(R.drawable.cheese_1);
+        TextDrawable drawable = mDrawableBuilder.build(String.valueOf(entity.getUsername().charAt(0)), mColorGenerator.getColor(entity.getUsername()));
+        holder.icon.setImageDrawable(drawable);
         holder.username.setText(entity.getUsername());
     }
 
-    private class ViewHolder{
+    private class ViewHolder {
         ImageView icon;
         TextView username;
     }
