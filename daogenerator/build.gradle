@@ -1,0 +1,31 @@
+project(':daogenerator') {
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'application'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    mainClassName = "com.ray.MyDaoGenerator"
+    def outputDir = "../app/src/main/java"
+
+    dependencies {
+        compile 'de.greenrobot:greendao-generator:1.3.1'
+        compile 'org.freemarker:freemarker:2.3.22'
+    }
+
+    artifacts {
+        archives jar
+    }
+
+    task createDocs {
+        def docs = file(outputDir)
+        docs.mkdirs()
+    }
+
+    run {
+        args outputDir
+    }
+}
