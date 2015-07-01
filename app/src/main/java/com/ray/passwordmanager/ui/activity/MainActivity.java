@@ -18,7 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.ray.passwordmanager.R;
+import com.ray.passwordmanager.db.entity.PasswordEntity;
 import com.ray.passwordmanager.db.service.DBHelper;
+import com.ray.passwordmanager.db.service.PasswordSvc;
 import com.ray.passwordmanager.ui.fragment.CheeseListFragment;
 import com.ray.passwordmanager.ui.fragment.PasswordNormalListFragment;
 
@@ -56,8 +58,13 @@ public class MainActivity extends AppCompatActivity {
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                PasswordEntity pwd = new PasswordEntity();
+                pwd.setUsername("u1");
+                pwd.setPassword("p1");
+                PasswordSvc.insertPwd(pwd);
                 Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }

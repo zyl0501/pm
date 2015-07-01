@@ -9,9 +9,7 @@ package com.ray.passwordmanager.db.entity;
  */
 public class PasswordEntity {
 
-    public static final Long INVALID_ID = -1l;
-
-    private Long id = INVALID_ID;
+    private Long id;
     /** Not-null value. */
     private String username;
     /** Not-null value. */

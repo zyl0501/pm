@@ -1,14 +1,14 @@
-package com.ray.passwordmanager.ui.adapter;
+package com.ray.passwordmanager.ui.adapter.recycler;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,42 +17,43 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.ray.passwordmanager.R;
 import com.ray.passwordmanager.db.entity.PasswordEntity;
+import com.ray.passwordmanager.ui.adapter.BasePMAdapter;
+import com.ray.passwordmanager.ui.fragment.CheeseListFragment;
 
-public class PwdNormalAdapter extends BasePMAdapter<PasswordEntity> {
+import java.util.List;
+
+public class PwdNormalAdapter extends RecyclerView.Adapter<PwdNormalAdapter.PwdViewHolder> {
 
     private static final float EXPAND_DECELERATION = 1f;
     private static final int EXPAND_DURATION = 300;
 
+    private List<PasswordEntity> mData;
     // declare the color generator and drawable builder
     private ColorGenerator mColorGenerator = ColorGenerator.MATERIAL;
     private TextDrawable.IBuilder mDrawableBuilder;
-    private ListView mListView;
+    private RecyclerView mListView;
     private DecelerateInterpolator mExpandInterpolator;
 
-    public PwdNormalAdapter(Context context, ListView listView) {
-        super(context);
+    public PwdNormalAdapter(RecyclerView listView) {
+        this.mListView = listView;
         mDrawableBuilder = TextDrawable.builder().round();
-        this.mListView=listView;
         mExpandInterpolator = new DecelerateInterpolator(EXPAND_DECELERATION);
     }
 
-    @Override
-    protected View newView(int position, View convertView, ViewGroup parent) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_pwd_normal, parent, false);
-        assert view != null;
-        ViewHolder holder = new ViewHolder();
-        holder.itemLayout = view.findViewById(R.id.pwd_item);
-        holder.icon = (ImageView) view.findViewById(R.id.pwd_icon);
-        holder.username = (TextView) view.findViewById(R.id.pwd_username);
-        holder.msg = (TextView) view.findViewById(R.id.pwd_msg);
-        view.setTag(holder);
-        return view;
+    public void setData(List<PasswordEntity> data) {
+        this.mData = data;
     }
 
     @Override
-    protected void bindView(int position, View view, ViewGroup parent) {
-        PasswordEntity entity = getItem(position);
-        final ViewHolder holder = (ViewHolder) view.getTag();
+    public PwdViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_pwd_normal, parent, false);
+        assert view != null;
+        return new PwdViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(final PwdViewHolder holder, int position) {
+        PasswordEntity entity = mData.get(position);
         TextDrawable drawable = mDrawableBuilder.build(String.valueOf(entity.getUsername().charAt(0)), mColorGenerator.getColor(entity.getUsername()));
         holder.icon.setImageDrawable(drawable);
         holder.username.setText(entity.getUsername());
@@ -64,8 +65,7 @@ public class PwdNormalAdapter extends BasePMAdapter<PasswordEntity> {
         });
     }
 
-
-    private void expandAlarm(final ViewHolder itemHolder, boolean animate) {
+    private void expandAlarm(final PwdViewHolder itemHolder, boolean animate) {
         final int startingHeight = itemHolder.itemLayout.getHeight();
         itemHolder.msg.setVisibility(View.VISIBLE);
 
@@ -140,9 +140,12 @@ public class PwdNormalAdapter extends BasePMAdapter<PasswordEntity> {
                     }
 
                     @Override
-                    public void onAnimationRepeat(Animator animation) { }
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+
                     @Override
-                    public void onAnimationStart(Animator animation) { }
+                    public void onAnimationStart(Animator animation) {
+                    }
                 });
                 animator.start();
 
@@ -153,11 +156,25 @@ public class PwdNormalAdapter extends BasePMAdapter<PasswordEntity> {
         });
     }
 
+    @Override
+    public int getItemCount() {
+        return mData == null ? 0 : mData.size();
+    }
 
-    private class ViewHolder {
+    public static class PwdViewHolder extends RecyclerView.ViewHolder {
+
         View itemLayout;
         ImageView icon;
         TextView username;
         TextView msg;
+
+        public PwdViewHolder(View view) {
+            super(view);
+            itemLayout = view.findViewById(R.id.pwd_item);
+            icon = (ImageView) view.findViewById(R.id.pwd_icon);
+            username = (TextView) view.findViewById(R.id.pwd_username);
+            msg = (TextView) view.findViewById(R.id.pwd_msg);
+        }
     }
+
 }
