@@ -1,5 +1,6 @@
 package com.ray.passwordmanager.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -61,12 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                PasswordEntity pwd = new PasswordEntity();
-                pwd.setUsername("u1");
-                pwd.setPassword("p1");
-                PasswordSvc.insertPwd(pwd);
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                PasswordEntity pwd = new PasswordEntity();
+//                pwd.setUsername("u1");
+//                pwd.setPassword("p1");
+//                PasswordSvc.insertPwd(pwd);
+//                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+                startActivity(new Intent(MainActivity.this, AddPwdActivity.class));
             }
         });
 
