@@ -1,5 +1,6 @@
 package com.ray.passwordmanager.ui.activity;
 
+import android.animation.Animator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 
 import com.ray.passwordmanager.R;
 import com.ray.passwordmanager.db.entity.PasswordEntity;
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
 //                PasswordSvc.insertPwd(pwd);
 //                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
+
+//                test();
+
                 startActivity(new Intent(MainActivity.this, AddPwdActivity.class));
             }
         });
@@ -145,5 +150,25 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitles.get(position);
         }
+    }
+
+    private void test() {
+        // previously invisible view
+        View myView = findViewById(R.id.my_view);
+
+        // get the center for the clipping circle
+        int cx = (myView.getLeft() + myView.getRight()) / 2;
+        int cy = (myView.getTop() + myView.getBottom()) / 2;
+
+        // get the final radius for the clipping circle
+        int finalRadius = Math.max(myView.getWidth(), myView.getHeight());
+
+        // create the animator for this view (the start radius is zero)
+        Animator anim =
+                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+
+        // make the view visible and start the animation
+        myView.setVisibility(View.VISIBLE);
+        anim.start();
     }
 }

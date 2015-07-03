@@ -57,7 +57,17 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_add_white_24dp"
+        app:backgroundTint="@color/orange"
         app:elevation="1dp"
+        />
+
+    <View
+        android:id="@+id/my_view"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:background="@color/primary_blue"
+        android:visibility="gone"
         />
 
 </android.support.design.widget.CoordinatorLayout>

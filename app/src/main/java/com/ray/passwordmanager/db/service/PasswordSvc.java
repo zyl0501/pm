@@ -6,6 +6,7 @@ import com.ray.passwordmanager.db.entity.PasswordEntity;
 import java.util.List;
 
 /**
+ * password 本地数据库相关的逻辑处理，如增删关联表的数据等
  * Created by Ray on 15/6/18.
  */
 public class PasswordSvc {
