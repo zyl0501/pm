@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/icon_img"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="top|left|start"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_account_circle_black_24dp"
+        />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dialog_divider"
+        android:background="@color/gray_d6"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="@dimen/input_icon_view_edt_margin"
+        android:layout_marginStart="@dimen/input_icon_view_edt_margin"
+        />
+
+</FrameLayout>

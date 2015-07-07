@@ -6,4 +6,7 @@
     <dimen name="card_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="list_item_avatar_size">40dp</dimen>
+    <dimen name="dialog_divider">1px</dimen>
+    <dimen name="input_icon_view_edt_height">56dp</dimen>
+    <dimen name="input_icon_view_edt_margin">60dp</dimen>
 </resources>

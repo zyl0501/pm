@@ -1,58 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/username_input_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/username"
-        app:errorEnabled="true"
-        app:hintTextAppearance="@style/FloatingStyle">
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/username_input_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/password_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/password"
-        app:errorEnabled="true"
-        app:hintTextAppearance="@style/FloatingStyle"
-        >
-
-        <EditText
-            android:id="@+id/password_input_edt"
+        <com.ray.passwordmanager.ui.widget.InputIconLayout
+            android:id="@+id/username_input_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" />
+            app:iconSrc="@drawable/ic_account_circle_black_24dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/username_input_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/username"
+                android:paddingRight="10dp"
+                android:singleLine="true" />
+        </com.ray.passwordmanager.ui.widget.InputIconLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/category_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/category"
-        app:errorEnabled="true"
-        app:hintTextAppearance="@style/FloatingStyle"
-        >
-
-        <EditText
-            android:id="@+id/category_input_edt"
+        <com.ray.passwordmanager.ui.widget.InputIconLayout
+            android:id="@+id/password_input_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:iconSrc="@drawable/ic_lock_black_24dp">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/password_input_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:paddingRight="10dp"
+                android:singleLine="true" />
+        </com.ray.passwordmanager.ui.widget.InputIconLayout>
 
-</LinearLayout>
+        <com.ray.passwordmanager.ui.widget.InputIconLayout
+            android:id="@+id/category_input_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:iconSrc="@drawable/ic_group_work_black_24dp">
+
+            <EditText
+                android:id="@+id/category_input_edt"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/category"
+                android:paddingRight="10dp"
+                android:singleLine="true" />
+        </com.ray.passwordmanager.ui.widget.InputIconLayout>
+    </LinearLayout>
+</ScrollView>

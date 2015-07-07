@@ -23,5 +23,8 @@
     <color name="colorAccent">@color/primary_blue</color>
     <color name="red">#da4336</color>
     <color name="orange">#FB8C00</color>
+    <color name="gray_d6">#d6d6d6</color>
+    <color name="gray_24">#242424</color>
+    <color name="gray_77">#777777</color>
 
 </resources>
