@@ -4,5 +4,6 @@
         <attr name="showIcon" format="boolean"/>
         <attr name="showDivider" format="boolean"/>
         <attr name="iconSrc" format="reference" />
+        <attr name="iconTint" format="color" />
     </declare-styleable>
 </resources>

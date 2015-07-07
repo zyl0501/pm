@@ -1,9 +1,13 @@
 package com.ray.passwordmanager.ui.widget;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.view.GravityCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.ray.passwordmanager.R;
 
@@ -20,6 +23,10 @@ import com.ray.passwordmanager.R;
  * Created by Ray on 15/7/6.
  */
 public class InputIconLayout extends FrameLayout {
+    private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
+    private static final int[] SELECTED_STATE_SET = {android.R.attr.state_selected};
+    private static final int[] DISABLED_STATE_SET = {-android.R.attr.state_enabled};
+
 
     private ViewGroup contentView;
     private ImageView iconImg;
@@ -28,6 +35,7 @@ public class InputIconLayout extends FrameLayout {
 
     private int iconResId;
     private boolean showIcon, showDivider;
+    private ColorStateList mIconTintList;
 
     public InputIconLayout(Context context) {
         this(context, null);
@@ -44,6 +52,12 @@ public class InputIconLayout extends FrameLayout {
         showIcon = t.getBoolean(R.styleable.InputIconLayoutStyle_showIcon, true);
         showDivider = t.getBoolean(R.styleable.InputIconLayoutStyle_showDivider, true);
         iconResId = t.getResourceId(R.styleable.InputIconLayoutStyle_iconSrc, -1);
+        if (t.hasValue(R.styleable.InputIconLayoutStyle_iconTint)) {
+            mIconTintList = t.getColorStateList(R.styleable.InputIconLayoutStyle_iconTint);
+        } else {
+            mIconTintList = createDefaultColorStateList(android.R.attr.textColorSecondary);
+        }
+
         t.recycle();
     }
 
@@ -53,7 +67,9 @@ public class InputIconLayout extends FrameLayout {
         dividerView = findViewById(R.id.divider);
 
         if (iconResId != -1) {
-            iconImg.setImageResource(iconResId);
+            Drawable d = getResources().getDrawable(iconResId);
+            DrawableCompat.setTintList(d, mIconTintList);
+            iconImg.setImageDrawable(d);
         }
         iconImg.setVisibility(showIcon ? View.VISIBLE : View.GONE);
         dividerView.setVisibility(showDivider ? View.VISIBLE : View.GONE);
@@ -82,6 +98,7 @@ public class InputIconLayout extends FrameLayout {
         mEditText.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focused) {
+                iconImg.setSelected(focused);
             }
         });
 
@@ -96,5 +113,29 @@ public class InputIconLayout extends FrameLayout {
 
     public EditText getEditText() {
         return mEditText;
+    }
+
+    private ColorStateList createDefaultColorStateList(int baseColorThemeAttr) {
+        TypedValue value = new TypedValue();
+        if (!getContext().getTheme().resolveAttribute(baseColorThemeAttr, value, true)) {
+            return null;
+        }
+        ColorStateList baseColor = getResources().getColorStateList(value.resourceId);
+        if (!getContext().getTheme().resolveAttribute(android.support.design.R.attr.colorPrimary, value, true)) {
+            return null;
+        }
+        int colorPrimary = value.data;
+        int defaultColor = baseColor.getDefaultColor();
+        return new ColorStateList(new int[][]{
+                DISABLED_STATE_SET,
+                CHECKED_STATE_SET,
+                SELECTED_STATE_SET,
+                EMPTY_STATE_SET
+        }, new int[]{
+                baseColor.getColorForState(DISABLED_STATE_SET, defaultColor),
+                colorPrimary,
+                colorPrimary,
+                defaultColor
+        });
     }
 }
